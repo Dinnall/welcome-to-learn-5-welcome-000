@@ -1,6 +1,6 @@
 # Frontend Homework
 
-This homework is designed to test knowledge of JavaScript, HTML & CSS. At Shadow, our front-end apps interact with RESTful APIs to send and retrieve data using modern JavaScript. You will be requesting data from an API, transforming this data, and displaying the data with HTML and CSS.
+This homework is designed to test knowledge of JavaScript, HTML & CSS. our front-end apps interact with RESTful APIs to send and retrieve data using modern JavaScript. You will be requesting data from an API, transforming this data, and displaying the data with HTML and CSS.
 
 ## Task
 
