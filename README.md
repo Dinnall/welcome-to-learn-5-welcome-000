@@ -1,49 +1,88 @@
-# Solving Your First Lab
+# Frontend Homework
 
-Now that you've got the Learn IDE up and running, you're going to use it to solve your very first lab on Learn. 
+This homework is designed to test knowledge of JavaScript, HTML & CSS. At Shadow, our front-end apps interact with RESTful APIs to send and retrieve data using modern JavaScript. You will be requesting data from an API, transforming this data, and displaying the data with HTML and CSS.
 
-## Objectives
+## Task
 
-1. Open a lab by clicking "Open" on this page on Learn.co
-2. Run the lab's tests with the `learn` CLI command
-3. Make a change to your copy of this lab
-4. Pass the tests using the `learn` CLI command
-5. Submit the passing lab with the `learn submit` CLI command
+You will be provided with an API and endpoint.  In `api/users.js`, write a function named `getUsers` that requests data from the `/users` endpoint, transforms the result into the format outlined below, returns a promise that resolves with the transformed object, and displays the result. In addition to `getUsers`, you may add as many helper functions as you wish.
 
-## Instructions
+1. Get data from the `/users` endpoint. Fetch pages of 10 items at a time.
 
-In this lesson you will practice the workflow that allows you to solve labs on Learn.
+2. The `getUsers` function accepts an options object and should support the following keys:
+  - `page` - Specifies which page to retrieve from the `/users` endpoint. If omitted, fetch page 1.
+  - `role` - Specified which role to retrieve from the `/users` endpoint. If omitted, fetch all roles.
 
-1. Click on the "Open" link on the lab toolbar above.
+  As an example, to fetch the 2nd page of admins from the API, `getUsers` might be called like:  
+  `getUsers({page: 2, role: 'admin'});`
 
-  ![Open](https://s3.amazonaws.com/learn-verified/LearnOpen.png)
+3. You can assume standard HTTP status codes on the response. If a request is unsuccessful, log an error message and recover.
 
-  After you click on this, your Learn IDE will launch.
+4. Upon a successful API response, transform the payload into an object containing the following keys:
+  - **ids**: An array containing the ids of all items returned from the request.
+  - **smsUsers**: The total number of users returned where smsUser is true.
 
-2. You should see all of the files associated with this lab in the Learn IDE's file browser (the left pane).
 
-3. In the console (the bottom pane), run the test suite by typing `learn` and hitting enter.
+5. Return a promise from `getUsers` that resolves with the transformed data.
 
-  ![lab-fail](http://learn-co-videos.s3.amazonaws.com/welcome/first-lab-setup.png)
+6. In index.html, display the results of the following request to the API:
 
-4. You'll see something similar to:
+  `getUsers({page: 2, role: 'admin'})`
 
-  ![lab-fail](https://s3.amazonaws.com/learn-verified/LearnRunningLearrn.png)
+7. You may display the information however you like. However we will be looking for well-formed, responsive HTML and CSS.
 
-  You can see your test is currently failing, which is fine. We haven't done any work yet, so it makes sense.
+8. At the top of the page, list the ids of the returned admins and the total number of SMS users
 
-  The failure reads: `Make sure you have edited the file edit-me.txt`
+9. Design should be informed by https://groundbase.io/
 
-5. To pass this lab, make any change to the `edit-me.txt` file (this file starts off empty). You can do this by clicking on the name of the file in the file browser in the left pane; the empty file will load in the text editor. Type into the text editor to change the contents of the file, then save your changes.
 
-6. Once your local tests are passing, you can submit this lab by running `learn submit` from your terminal.
+### API
 
-  ![learn-submit](https://s3.amazonaws.com/learn-verified/LearnSubmit2.png)
+The `/users` API endpoint returns a JSON array of items in the following format:
 
-  You should see this lab pass on Learn.co (if you don't, try hitting refresh; if you still don't, use "Ask a Question", and we'll help). Congratulations! You've just solved your first lab.
+```json
+[{
+    "id": 1,
+    "email": "janedoe@example.com",
+    "familyName": "Doe",
+    "givenName": "Jane",
+    "role": "admin",
+    "smsUser": true
+  },
+  {
+    "id": 2,
+    "email": "johndoe@example.com",
+    "familyName": "Doe",
+    "givenName": "John",
+    "role": "standard",
+    "smsUser": false
+  }]
+```
 
-## Video Demo
+Each item returned from the `/users` endpoint will have:
+- **id**: a unique integer
+- **email**: string
+- **familyName**: string
+- **givenName**: string
+- **role**: string ("admin" or "standard")
+- **smsUser**: boolean
 
-<iframe width="100%" height="720" src="https://www.youtube.com/embed/MZ2vUG6p1PY?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+Additionally, the `/users` endpoint accepts the following options, sent as query string parameters on the request URL:
+- **limit**: The number of items to be returned
+- **offset**: The index of the first item to be returned
+- **role**: Which role to include. If omitted, all roles will be returned.
 
-<p class='util--hide'>View <a href='https://learn.co/lessons/welcome-to-learn-5'>Your First Lab</a> on Learn.co and start learning to code for free.</p>
+An example request URL might look like:
+
+`/users?limit=20&offset=2&role=admin`
+
+### Additional Requirements
+
+- Write your solution using ES2015. You may use any methods or syntax supported by Babel.
+- Use the Fetch API to interact with the records endpoint.
+- Please delete the `node_modules` directory before submitting your completed homework.
+
+### Setup
+
+**Requirements:** NodeJS > 4, npm  
+`npm install` in `/` and `/users` to install  
+`node users/index.js` to start server
